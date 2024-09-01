@@ -80,7 +80,7 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await UserModel.findOne({ where: { email } });
-    if (user.length == 0) throw { message: "User Not Found" };
+    if (!user) throw { message: "User Not Found" };
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) throw { message: "Password Incorrect" };
